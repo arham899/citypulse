@@ -1,0 +1,24 @@
+# Keeps the deployed feed fresh: Vercel's free tier only allows daily crons
+# and has no long-lived processes, so this workflow triggers an ingest cycle
+# on the deployed API every 20 minutes.
+#
+# Required repository secrets:
+#   CITYPULSE_URL   — the deployed base URL, e.g. https://citypulse.vercel.app
+#   ADMIN_API_KEY   — must match the ADMIN_API_KEY env var set on Vercel
+
+name: Refresh event feed
+
+on:
+  schedule:
+    - cron: "*/20 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger ingest cycle
+        run: |
+          curl -fsS -X POST "${{ secrets.CITYPULSE_URL }}/api/admin/ingest" \
+            -H "X-Admin-Key: ${{ secrets.ADMIN_API_KEY }}" \
+            --max-time 120
