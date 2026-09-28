@@ -1,5 +1,24 @@
-# CityPulse — City Events Aggregator
+<div align="center">
 
+# 📍 CityPulse
+
+**Every event in Islamabad — one live, deduplicated feed.**
+
+A multi-source event aggregator: Python scrapers pull from 5 sources, a normalization + fuzzy-dedup pipeline cleans them, and a map-driven React app serves the result. The feed refreshes itself every 20 minutes.
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white) ![Leaflet](https://img.shields.io/badge/Leaflet-199900?style=flat-square&logo=leaflet&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
+
+</div>
+
+## ✨ Highlights
+
+- **5 pluggable data connectors** — AllEvents.in, Eventbrite, Cinepax, Meta Graph API and Ticketmaster, each behind one `fetch()` + `map_raw()` interface
+- **3-layer deduplication** — source ID, exact fingerprint, then fuzzy title similarity + venue proximity; duplicates are *merged* so the richest fields survive
+- **Geo search** — bounding-box SQL pre-filter + haversine distance, "Near me" radius filter and a Leaflet map view
+- **Replayable pipeline** — every raw payload is staged before normalization; organizer submissions go through a moderation queue
+- **Serverless deployment** — Vercel (static React + Python function) with a GitHub Actions cron keeping the feed fresh
+
+---
 A location-aware event discovery platform for **Islamabad** (launch city). CityPulse aggregates **real, live events** from multiple sources — the AllEvents.in and Eventbrite scrapers, optional ticketing APIs, and direct organizer submissions — normalizes them into a unified schema, deduplicates cross-source listings, and serves them through a filterable, map-driven web app. The feed refreshes automatically **every 20 minutes**.
 
 > *"What is happening in my city right now, this week, or this weekend?"* — one feed, every category.
